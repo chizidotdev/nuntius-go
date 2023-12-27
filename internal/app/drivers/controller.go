@@ -70,3 +70,7 @@ func NewController(
 
 	return controller
 }
+
+func (c *Controller) Start(address string) error {
+	return c.router.Run(address)
+}

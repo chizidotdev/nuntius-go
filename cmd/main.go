@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/chizidotdev/nuntius/config"
 	"github.com/chizidotdev/nuntius/internal/app/db"
+	"github.com/chizidotdev/nuntius/internal/app/drivers"
 	"github.com/chizidotdev/nuntius/internal/core/service"
 	_ "github.com/lib/pq"
 	"gorm.io/driver/postgres"
@@ -11,6 +12,8 @@ import (
 )
 
 func main() {
+	config.LoadConfig()
+
 	conn, err := gorm.Open(postgres.Open(config.EnvVars.PostgresUrl), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Cannot connect to db:", err)
@@ -22,7 +25,7 @@ func main() {
 	userService := service.NewUserService(userStore)
 	messageService := service.NewMessageService(messageStore)
 
-	server := http.NewHTTPServer(
+	server := drivers.NewController(
 		userService,
 		messageService,
 	)
@@ -32,4 +35,9 @@ func main() {
 		port = "8080"
 	}
 
+	serverAddr := "0.0.0.0:" + port
+	err = server.Start(serverAddr)
+	if err != nil {
+		log.Fatal("Cannot start server:", err)
+	}
 }
