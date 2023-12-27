@@ -14,6 +14,9 @@ dropdb:
 	docker exec -it nuntius dropdb nuntius
 
 server:
-	air
+	make templ && go run cmd/main.go
 
-.PHONY: build postgres postgres-cli createdb dropdb server
+templ:
+	templ fmt . && templ generate
+
+.PHONY: build postgres postgres-cli createdb dropdb server templ

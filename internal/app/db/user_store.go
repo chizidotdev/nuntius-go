@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 	"gorm.io/gorm/clause"
+	"log"
 )
 
 var _ domain.UserRepository = (*UserStore)(nil)
@@ -27,6 +28,11 @@ type User struct {
 }
 
 func NewUserStore(db *gorm.DB) *UserStore {
+	err := db.AutoMigrate(&User{})
+	if err != nil {
+		log.Fatal("Failed to migrate Message")
+	}
+
 	return &UserStore{
 		DB: db,
 	}

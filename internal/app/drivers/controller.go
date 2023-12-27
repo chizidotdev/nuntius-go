@@ -55,7 +55,7 @@ func NewController(
 	}
 
 	router.GET("/", controller.Index)
-	//router.GET("/login", controller.Login)
+	router.GET("/login", controller.Login)
 	//router.POST("/login", controller.LoginPost)
 	//router.GET("/register", controller.Register)
 	//router.POST("/register", controller.RegisterPost)
