@@ -14,12 +14,12 @@ func renderComponent(component templ.Component, ctx *gin.Context) {
 	}
 }
 
-func (c *Controller) Index(ctx *gin.Context) {
+func (c *Controller) index(ctx *gin.Context) {
 	component := components.Index()
 	renderComponent(component, ctx)
 }
 
-func (c *Controller) Login(ctx *gin.Context) {
+func (c *Controller) login(ctx *gin.Context) {
 	component := components.Login()
 	renderComponent(component, ctx)
 }

@@ -1,14 +1,16 @@
 package components
 
 templ Login() {
-	<div>
-		<h1 className="text-center">Login</h1>
-		<p className="text-center">
-			Recieve anonymous compliments from your friends and send anonymous
-			messages to your friends for free.
-		</p>
-		<button>
-			Google Sign in
-		</button>
-	</div>
+	@Layout("Login") {
+		<div>
+			<h1 className="text-center">Login</h1>
+			<p className="text-center">
+				Recieve anonymous compliments from your friends and send anonymous
+				messages to your friends for free.
+			</p>
+			<a href="/login/google">
+				Google Sign in
+			</a>
+		</div>
+	}
 }

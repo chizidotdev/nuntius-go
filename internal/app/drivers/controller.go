@@ -2,44 +2,20 @@ package drivers
 
 import (
 	"github.com/chizidotdev/nuntius/internal/core/service"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 )
 
-type (
-	Controller struct {
-		router         *gin.Engine
-		userService    *service.UserService
-		messageService *service.MessageService
-	}
+type Controller struct {
+	router         *gin.Engine
+	userService    *service.UserService
+	messageService *service.MessageService
+}
 
-	Link struct {
-		Uri   string
-		Title string
-	}
-)
-
-var (
-	AuthenticatedLinks = []Link{
-		{
-			Uri:   "/",
-			Title: "Home",
-		},
-		{
-			Uri:   "/messages",
-			Title: "Messages",
-		},
-		{
-			Uri:   "/settings",
-			Title: "Settings",
-		},
-	}
-
-	UnAuthenticatedLinks = []Link{
-		{
-			Uri:   "/login",
-			Title: "Login",
-		},
-	}
+const (
+	profileKey = "profile"
+	stateKey   = "state"
 )
 
 func NewController(
@@ -47,6 +23,8 @@ func NewController(
 	messageService *service.MessageService,
 ) *Controller {
 	router := gin.Default()
+	store := cookie.NewStore([]byte("secret"))
+	router.Use(sessions.Sessions("nuntius_auth", store))
 
 	controller := &Controller{
 		router:         router,
@@ -54,11 +32,12 @@ func NewController(
 		messageService: messageService,
 	}
 
-	router.GET("/", controller.Index)
-	router.GET("/login", controller.Login)
-	//router.POST("/login", controller.LoginPost)
-	//router.GET("/register", controller.Register)
-	//router.POST("/register", controller.RegisterPost)
+	router.GET("/login", controller.login)
+	router.GET("/login/google", controller.loginWithSSO)
+	router.GET("/callback", controller.ssoCallback)
+
+	router.Use(controller.isAuthenticated)
+	router.GET("/", controller.index)
 	//router.GET("/logout", controller.Logout)
 	//
 	//router.GET("/settings", controller.Settings)

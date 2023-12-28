@@ -2,6 +2,8 @@ package service
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/base64"
 	"encoding/gob"
 	"encoding/json"
 	"github.com/chizidotdev/nuntius/config"
@@ -35,6 +37,10 @@ func NewUserService(repo domain.UserRepository) *UserService {
 		repo:       repo,
 		authConfig: oauthConfig,
 	}
+}
+
+func (u *UserService) GetGoogleAuthConfig() oauth2.Config {
+	return u.authConfig
 }
 
 func (u *UserService) GoogleCallback(ctx context.Context, code string) (*domain.User, error) {
@@ -102,4 +108,16 @@ func (u *UserService) getGoogleUserData(code string) (UserData, error) {
 	}
 
 	return user, nil
+}
+
+func (u *UserService) GenerateAuthState() (string, error) {
+	b := make([]byte, 32)
+	_, err := rand.Read(b)
+	if err != nil {
+		return "", err
+	}
+
+	state := base64.RawURLEncoding.EncodeToString(b)
+
+	return state, nil
 }
