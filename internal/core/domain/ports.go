@@ -8,7 +8,7 @@ import (
 type (
 	UserRepository interface {
 		Upsert(context.Context, *User) error
-		Update(context.Context, *User) error
+		UpdateUsername(context.Context, *User) (*User, error)
 		Get(context.Context, uuid.UUID) (*User, error)
 		GetByUsername(context.Context, string) (*User, error)
 		Delete(context.Context, uuid.UUID) error

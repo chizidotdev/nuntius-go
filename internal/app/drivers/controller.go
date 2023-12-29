@@ -38,10 +38,10 @@ func NewController(
 
 	router.Use(controller.isAuthenticated)
 	router.GET("/", controller.index)
-	//router.GET("/logout", controller.Logout)
-	//
-	//router.GET("/settings", controller.Settings)
-	//router.POST("/settings", controller.SettingsPost)
+	router.GET("/logout", controller.logout)
+
+	router.GET("/settings", controller.settings)
+	router.POST("/settings", controller.saveSettings)
 	//
 	//router.GET("/messages", controller.Messages)
 	//router.GET("/messages/:id", controller.Message)

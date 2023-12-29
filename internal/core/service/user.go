@@ -121,3 +121,21 @@ func (u *UserService) GenerateAuthState() (string, error) {
 
 	return state, nil
 }
+
+type SaveSettingsReq struct {
+	Email    string
+	Username string `form:"username" binding:"required"`
+}
+
+func (u *UserService) SaveSettings(ctx context.Context, req SaveSettingsReq) (*domain.User, error) {
+	user := &domain.User{
+		Email:    req.Email,
+		Username: req.Username,
+	}
+	user, err := u.repo.UpdateUsername(ctx, user)
+	if err != nil {
+		return nil, err
+	}
+
+	return user, err
+}
