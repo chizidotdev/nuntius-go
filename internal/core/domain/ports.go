@@ -6,8 +6,8 @@ import (
 )
 
 type (
-	UserRepository interface {
-		Upsert(context.Context, *User) error
+	UserStore interface {
+		Upsert(context.Context, *User) (*User, error)
 		UpdateUsername(context.Context, *User) (*User, error)
 		Get(context.Context, uuid.UUID) (*User, error)
 		GetByUsername(context.Context, string) (*User, error)

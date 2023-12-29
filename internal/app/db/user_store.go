@@ -9,7 +9,7 @@ import (
 	"log"
 )
 
-var _ domain.UserRepository = (*UserStore)(nil)
+var _ domain.UserStore = (*UserStore)(nil)
 
 type UserStore struct {
 	DB *gorm.DB
@@ -38,7 +38,7 @@ func NewUserStore(db *gorm.DB) *UserStore {
 	}
 }
 
-func (s *UserStore) Upsert(_ context.Context, arg *domain.User) error {
+func (s *UserStore) Upsert(_ context.Context, arg *domain.User) (*domain.User, error) {
 	u := User{
 		FirstName:     arg.FirstName,
 		LastName:      arg.LastName,
@@ -48,11 +48,23 @@ func (s *UserStore) Upsert(_ context.Context, arg *domain.User) error {
 		EmailVerified: arg.EmailVerified,
 		GoogleID:      arg.GoogleID,
 	}
-	err := s.DB.Clauses(clause.OnConflict{
-		Columns:   []clause.Column{{Name: "email"}},
-		UpdateAll: true,
-	}).Create(&u).Error
-	return err
+	err := s.DB.Debug().
+		Clauses(clause.OnConflict{
+			Columns:   []clause.Column{{Name: "email"}},
+			DoUpdates: clause.AssignmentColumns([]string{"first_name", "last_name", "image", "email_verified", "google_id"}),
+		}, clause.Returning{}).
+		Create(&u).Error
+
+	return &domain.User{
+		ID:            u.ID,
+		FirstName:     u.FirstName,
+		LastName:      u.LastName,
+		Username:      u.Username,
+		Email:         u.Email,
+		Image:         u.Image,
+		EmailVerified: u.EmailVerified,
+		GoogleID:      u.GoogleID,
+	}, err
 }
 
 func (s *UserStore) UpdateUsername(_ context.Context, arg *domain.User) (*domain.User, error) {

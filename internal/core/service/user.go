@@ -16,11 +16,11 @@ import (
 )
 
 type UserService struct {
-	repo       domain.UserRepository
+	repo       domain.UserStore
 	authConfig oauth2.Config
 }
 
-func NewUserService(repo domain.UserRepository) *UserService {
+func NewUserService(repo domain.UserStore) *UserService {
 	gob.Register(domain.User{})
 
 	oauthConfig := oauth2.Config{
@@ -49,7 +49,7 @@ func (u *UserService) GoogleCallback(ctx context.Context, code string) (*domain.
 		return nil, err
 	}
 
-	user := domain.User{
+	user := &domain.User{
 		Email:         userData.Email,
 		EmailVerified: userData.VerifiedEmail,
 		FirstName:     userData.GivenName,
@@ -58,12 +58,12 @@ func (u *UserService) GoogleCallback(ctx context.Context, code string) (*domain.
 		GoogleID:      userData.Id,
 	}
 
-	err = u.repo.Upsert(ctx, &user)
+	user, err = u.repo.Upsert(ctx, user)
 	if err != nil {
 		return nil, err
 	}
 
-	return &user, nil
+	return user, nil
 }
 
 type UserData struct {
