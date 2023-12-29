@@ -1,8 +1,22 @@
 package components
 
-templ Index() {
+import "github.com/chizidotdev/nuntius/internal/core/domain"
+
+templ Index(user *domain.User, profileLink string, whatsAppUrl templ.SafeURL) {
 	@Layout("Home") {
-		<h1>Index</h1>
-		<p>Welcome to Nuntius!</p>
+		<h1>{ user.Username }'s profile</h1>
+		<p id="profile-link" onclick="copyProfileLink()">{ profileLink }</p>
+		<p>Share your profile link ❤️ to get anonymous messages from your friends. Go to 'View Messages' to check out the responses.</p>
+		<a href="/messages" class="btn btn-primary">View Messages</a>
+		<a href={ whatsAppUrl } target="_blank" class="btn btn-success">Share on Whatsapp</a>
+		<a href="/settings" class="btn btn-primary">Settings</a>
+		<a href="/logout" class="btn btn-danger">Logout</a>
+		<script>
+		function copyProfileLink() {
+            let profileLink = document.getElementById("profile-link").innerText;
+            navigator.clipboard.writeText(profileLink);
+            alert("Copied to clipboard!");
+        }
+        </script>
 	}
 }

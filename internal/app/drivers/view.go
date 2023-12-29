@@ -15,13 +15,19 @@ func renderComponent(component templ.Component, ctx *gin.Context) {
 	}
 }
 
+const whatsAppBaseUrl = "https://api.whatsapp.com/send?text=%F0%9F%92%80Hey%21+Write+a+%2Asecret+anonymous+message%2A+for+me..+%F0%9F%98%89+I+%2Awon%27t+know%2A+who+wrote+it..+%F0%9F%92%80%F0%9F%A4%8C+%F0%9F%91%89+https://nuntius.aidmedium.com/message/"
+const baseUrl = "https://nuntius.aidmedium.com"
+
 func (c *Controller) index(ctx *gin.Context) {
 	user := c.getAuthenticatedUser(ctx)
 	if user.Username == "" {
 		ctx.Redirect(http.StatusFound, "/settings")
 		return
 	}
-	component := components.Index()
+
+	whatsAppUrl := templ.SafeURL(whatsAppBaseUrl + user.Username)
+	profileLink := baseUrl + "/message/" + user.Username
+	component := components.Index(user, profileLink, whatsAppUrl)
 	renderComponent(component, ctx)
 }
 
