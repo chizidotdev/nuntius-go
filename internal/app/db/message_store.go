@@ -32,19 +32,19 @@ func NewMessageStore(db *gorm.DB) *MessageStore {
 	}
 }
 
-func (m *MessageStore) Create(_ context.Context, arg *domain.Message) error {
+func (m *MessageStore) Create(ctx context.Context, arg *domain.Message) error {
 	msg := Message{
 		Content:  arg.Content,
 		Archived: arg.Archived,
 		UserID:   arg.UserID,
 	}
-	err := m.DB.Create(&msg).Error
+	err := m.DB.WithContext(ctx).Create(&msg).Error
 	return err
 }
 
-func (m *MessageStore) Get(_ context.Context, id uuid.UUID) (*domain.Message, error) {
+func (m *MessageStore) Get(ctx context.Context, id uuid.UUID) (*domain.Message, error) {
 	msg := Message{}
-	err := m.DB.Where("id = ?", id).First(&msg).Error
+	err := m.DB.WithContext(ctx).Where("id = ?", id).First(&msg).Error
 	return &domain.Message{
 		ID:       msg.ID,
 		Content:  msg.Content,
@@ -53,19 +53,23 @@ func (m *MessageStore) Get(_ context.Context, id uuid.UUID) (*domain.Message, er
 	}, err
 }
 
-func (m *MessageStore) GetAll(_ context.Context, userID uuid.UUID) ([]*domain.Message, error) {
+func (m *MessageStore) GetAll(ctx context.Context, userID uuid.UUID) ([]*domain.Message, error) {
 	var msgs []*domain.Message
-	err := m.DB.Order("created_at desc").Find(&msgs, "user_id = ?", userID).Error
+	err := m.DB.WithContext(ctx).
+		Order("created_at desc").
+		Find(&msgs, "user_id = ?", userID).
+		Error
 	return msgs, err
 }
 
-func (m *MessageStore) Delete(_ context.Context, id uuid.UUID) error {
-	err := m.DB.Delete(&Message{}, "id = ?", id).Error
+func (m *MessageStore) Delete(ctx context.Context, id uuid.UUID) error {
+	err := m.DB.WithContext(ctx).Delete(&Message{}, "id = ?", id).Error
 	return err
 }
 
-func (m *MessageStore) UpdateArchive(_ context.Context, arg domain.UpdateArchiveInput) error {
-	err := m.DB.Model(&Message{}).
+func (m *MessageStore) UpdateArchive(ctx context.Context, arg domain.UpdateArchiveInput) error {
+	err := m.DB.WithContext(ctx).
+		Model(&Message{}).
 		Where("id = ?", arg.ID).
 		Update("archived", arg.Archived).Error
 	return err

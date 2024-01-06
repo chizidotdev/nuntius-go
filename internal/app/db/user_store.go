@@ -38,7 +38,7 @@ func NewUserStore(db *gorm.DB) *UserStore {
 	}
 }
 
-func (s *UserStore) Upsert(_ context.Context, arg *domain.User) (*domain.User, error) {
+func (s *UserStore) Upsert(ctx context.Context, arg *domain.User) (*domain.User, error) {
 	u := User{
 		FirstName:     arg.FirstName,
 		LastName:      arg.LastName,
@@ -48,7 +48,7 @@ func (s *UserStore) Upsert(_ context.Context, arg *domain.User) (*domain.User, e
 		EmailVerified: arg.EmailVerified,
 		GoogleID:      arg.GoogleID,
 	}
-	err := s.DB.Debug().
+	err := s.DB.WithContext(ctx).
 		Clauses(clause.OnConflict{
 			Columns:   []clause.Column{{Name: "email"}},
 			DoUpdates: clause.AssignmentColumns([]string{"first_name", "last_name", "image", "email_verified", "google_id"}),
@@ -67,9 +67,9 @@ func (s *UserStore) Upsert(_ context.Context, arg *domain.User) (*domain.User, e
 	}, err
 }
 
-func (s *UserStore) UpdateUsername(_ context.Context, arg *domain.User) (*domain.User, error) {
+func (s *UserStore) UpdateUsername(ctx context.Context, arg *domain.User) (*domain.User, error) {
 	u := User{}
-	err := s.DB.
+	err := s.DB.WithContext(ctx).
 		Model(&u).
 		Clauses(clause.Returning{}).
 		Where("email = ?", arg.Email).
@@ -87,19 +87,19 @@ func (s *UserStore) UpdateUsername(_ context.Context, arg *domain.User) (*domain
 	}, err
 }
 
-func (s *UserStore) Get(_ context.Context, id uuid.UUID) (*domain.User, error) {
+func (s *UserStore) Get(ctx context.Context, id uuid.UUID) (*domain.User, error) {
 	var u domain.User
-	err := s.DB.Preload("Messages").First(&u, "id = ?", id).Error
+	err := s.DB.WithContext(ctx).Preload("Messages").First(&u, "id = ?", id).Error
 	return &u, err
 }
 
-func (s *UserStore) GetByUsername(_ context.Context, username string) (*domain.User, error) {
+func (s *UserStore) GetByUsername(ctx context.Context, username string) (*domain.User, error) {
 	var u domain.User
-	err := s.DB.Preload("Messages").First(&u, "username = ?", username).Error
+	err := s.DB.WithContext(ctx).Preload("Messages").First(&u, "username = ?", username).Error
 	return &u, err
 }
 
-func (s *UserStore) Delete(_ context.Context, id uuid.UUID) error {
-	err := s.DB.Delete(&User{}, "id = ?", id).Error
+func (s *UserStore) Delete(ctx context.Context, id uuid.UUID) error {
+	err := s.DB.WithContext(ctx).Delete(&User{}, "id = ?", id).Error
 	return err
 }
