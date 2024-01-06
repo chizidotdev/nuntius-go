@@ -29,6 +29,7 @@ func main() {
 	messageService := service.NewMessageService(messageStore, userStore)
 
 	server := drivers.NewController(
+		conn,
 		userService,
 		messageService,
 	)

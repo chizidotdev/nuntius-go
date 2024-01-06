@@ -10,6 +10,8 @@ type Config struct {
 	PostgresUrl        string `mapstructure:"POSTGRES_URL"`
 	GoogleClientID     string `mapstructure:"GOOGLE_CLIENT_ID"`
 	GoogleClientSecret string `mapstructure:"GOOGLE_CLIENT_SECRET"`
+	CookieDomain       string `mapstructure:"COOKIE_DOMAIN"`
+	AuthSecret         string `mapstructure:"AUTH_SECRET"`
 	AuthCallbackUrl    string `mapstructure:"AUTH_CALLBACK_URL"`
 	BaseUrl            string `mapstructure:"BASE_URL"`
 }
@@ -28,6 +30,8 @@ func LoadConfig() {
 	EnvVars.PostgresUrl = viper.GetString("POSTGRES_URL")
 	EnvVars.GoogleClientID = viper.GetString("GOOGLE_CLIENT_ID")
 	EnvVars.GoogleClientSecret = viper.GetString("GOOGLE_CLIENT_SECRET")
+	EnvVars.CookieDomain = viper.GetString("COOKIE_DOMAIN")
+	EnvVars.AuthSecret = viper.GetString("AUTH_SECRET")
 	EnvVars.AuthCallbackUrl = viper.GetString("AUTH_CALLBACK_URL")
 	EnvVars.BaseUrl = viper.GetString("BASE_URL")
 }

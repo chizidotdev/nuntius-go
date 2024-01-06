@@ -1,10 +1,13 @@
 package drivers
 
 import (
+	"github.com/chizidotdev/nuntius/config"
 	"github.com/chizidotdev/nuntius/internal/core/service"
 	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
+	gormsessions "github.com/gin-contrib/sessions/gorm"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
+	"net/http"
 )
 
 type Controller struct {
@@ -19,11 +22,21 @@ const (
 )
 
 func NewController(
+	db *gorm.DB,
 	userService *service.UserService,
 	messageService *service.MessageService,
 ) *Controller {
 	router := gin.Default()
-	store := cookie.NewStore([]byte("secret"))
+
+	store := gormsessions.NewStore(db, true, []byte(config.EnvVars.AuthSecret))
+	store.Options(sessions.Options{
+		MaxAge:   86400 * 7, // 7 days
+		Secure:   false,
+		HttpOnly: true,
+		Domain:   config.EnvVars.CookieDomain,
+		SameSite: http.SameSiteLaxMode,
+		Path:     "/",
+	})
 	router.Use(sessions.Sessions("nuntius_auth", store))
 
 	controller := &Controller{

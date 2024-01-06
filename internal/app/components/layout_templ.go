@@ -61,6 +61,7 @@ func Layout(title string) templ.Component {
 		templ_7745c5c3_Var5 := `
 		        body {
                     font-family: Darker Grotesque,sans-serif;
+                    margin: 1rem;
                 }
 	        `
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
