@@ -6,7 +6,6 @@ import (
 	"github.com/chizidotdev/nuntius/internal/core/service"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
@@ -29,7 +28,7 @@ func (c *Controller) logout(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 	session.Clear()
 	if err := session.Save(); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		renderComponent(components.LogoutError(), ctx)
 		return
 	}
 
@@ -84,23 +83,22 @@ func (c *Controller) saveSettings(ctx *gin.Context) {
 	var req service.SaveSettingsReq
 	err := ctx.Bind(&req)
 	if err != nil {
-		ctx.JSON(400, gin.H{"error": err.Error()})
+		renderComponent(components.SettingsError("Invalid username input"), ctx)
 		return
 	}
 
 	user := c.getAuthenticatedUser(ctx)
-	log.Println(user)
 	req.Email = user.Email
 	user, err = c.userService.SaveSettings(ctx, req)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		renderComponent(components.SettingsError(err.Error()), ctx)
 		return
 	}
 
 	session := sessions.Default(ctx)
 	session.Set(profileKey, user)
 	if err := session.Save(); err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		renderComponent(components.SettingsError(err.Error()), ctx)
 		return
 	}
 

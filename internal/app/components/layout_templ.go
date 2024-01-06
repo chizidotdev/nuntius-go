@@ -23,14 +23,14 @@ func Layout(title string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link href=\"https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;900&amp;family=Playfair+Display:wght@400;900&amp;display=swap\" rel=\"stylesheet\"><link href=\"https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;500;800&amp;display=swap\" rel=\"stylesheet\"><link rel=\"shortcut icon\" href=\"/bubble-chat.png\" type=\"image/x-icon\"><meta name=\"description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:url\" content=\"https://nuntius.chizi.dev/login\"><meta property=\"og:title\" content=\"Login - Nuntius\"><meta property=\"og:description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><meta property=\"og:image\" content=\"\"><meta property=\"twitter:card\" content=\"summary_large_image\"><meta property=\"twitter:url\" content=\"https://nuntius.chizi.dev/login\"><meta property=\"twitter:title\" content=\"Login - Nuntius\"><meta property=\"twitter:description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><meta property=\"twitter:image\" content=\"\"><title>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link href=\"https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;500;800&amp;display=swap\" rel=\"stylesheet\"><meta name=\"description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:title\" content=\"Login - Nuntius\"><meta property=\"og:description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/app/components/layout.templ`, Line: 36, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/app/components/layout.templ`, Line: 21, Col: 17}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -54,30 +54,25 @@ func Layout(title string) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</script></head><body><header><nav><a href=\"/\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</script></head><body><style>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Var5 := `Home`
+		templ_7745c5c3_Var5 := `
+		        body {
+                    font-family: Darker Grotesque,sans-serif;
+                }
+	        `
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var5)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> <a href=\"/login\">")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</style><header><nav><a href=\"/\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Var6 := `Login`
+		templ_7745c5c3_Var6 := `Home`
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var6)
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</a> <a href=\"/logout\">")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Var7 := `Logout`
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var7)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

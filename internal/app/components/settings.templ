@@ -3,12 +3,17 @@ package components
 templ Settings() {
 	@Layout("Settings") {
 		<div>
-			<h1>Change Username</h1>
+			<h1>Settings</h1>
 			<p>Hi there. Please set a username to continue</p>
-			<form method="post">
+			<div id="response"></div>
+			<form hx-post="/settings" hx-target="#response">
 				<input type="text" name="username" placeholder="Enter new username"/>
 				<button type="submit">Change Username</button>
 			</form>
 		</div>
 	}
+}
+
+templ SettingsError(errMsg string) {
+	<p>{ errMsg }</p>
 }

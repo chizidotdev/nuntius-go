@@ -3,21 +3,30 @@ package components
 templ Message(username string, err string) {
 	@Layout("Send Message") {
 		<div>
+			<div id="response"></div>
 			<h2>Say Something</h2>
 			if err != "" {
 				@MessageError(err)
 			} else {
-				<div id="response"></div>
-				<form hx-post={ "/message/" + username } hx-target="#response">
+				<form hx-post={ "/message/" + username } hx-target="#response" id="form">
 					<label>Leave a message</label>
 					<br/>
-					<textarea name="content" placeholder="Enter your message"></textarea>
+					<textarea name="content" id="content" placeholder="Enter your message"></textarea>
 					<br/>
 					<br/>
 					<button type="submit">Send Message</button>
 				</form>
 			}
 		</div>
+		<script>
+		    const form = document.getElementById('form');
+		    const content = document.getElementById('content');
+            form.addEventListener('submit', (e) => {
+                setTimeout(() => {
+                    content.value = '';
+                }, 100);
+            });
+		</script>
 	}
 }
 
@@ -26,14 +35,12 @@ templ MessageResponse() {
 		<p>Your message has been sent. Now it's your turn to dare your friends to send you a message!</p>
 		<a href="/login">Click here to Login</a>
 		<br/>
-		<br/>
 	</div>
 }
 
 templ MessageError(errMsg string) {
 	<div>
-		<p>An error occurred. Please try again.</p>
-		<p>{ errMsg }</p>
+		<p>An error occurred. { errMsg }. Please try again.</p>
 		<a href="/login">Click here to Login</a>
 		<br/>
 		<br/>

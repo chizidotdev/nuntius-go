@@ -5,13 +5,14 @@ import (
 	"github.com/chizidotdev/nuntius/config"
 	"github.com/chizidotdev/nuntius/internal/app/components"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 )
 
 func renderComponent(component templ.Component, ctx *gin.Context) {
 	err := component.Render(ctx, ctx.Writer)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		log.Fatal(err)
 		return
 	}
 }

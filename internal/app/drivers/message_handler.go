@@ -21,7 +21,7 @@ func (c *Controller) sendMessage(ctx *gin.Context) {
 	var req SendMessageReq
 	err := ctx.ShouldBind(&req)
 	if err != nil {
-		renderComponent(components.MessageError(err.Error()), ctx)
+		renderComponent(components.MessageError("Invalid message input"), ctx)
 		return
 	}
 
@@ -41,7 +41,7 @@ func (c *Controller) messages(ctx *gin.Context) {
 	user := c.getAuthenticatedUser(ctx)
 	msgs, err := c.messageService.ListMessages(ctx, user.ID)
 	if err != nil {
-		ctx.JSON(500, gin.H{"error": err.Error()})
+		renderComponent(components.MessagesError(), ctx)
 		return
 	}
 	component := components.Messages(msgs)
