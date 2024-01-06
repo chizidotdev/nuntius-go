@@ -14,7 +14,10 @@ import (
 func main() {
 	config.LoadConfig()
 
-	conn, err := gorm.Open(postgres.Open(config.EnvVars.PostgresUrl), &gorm.Config{})
+	conn, err := gorm.Open(
+		postgres.Open(config.EnvVars.PostgresUrl),
+		&gorm.Config{TranslateError: true},
+	)
 	if err != nil {
 		log.Fatal("Cannot connect to db:", err)
 	}
@@ -23,7 +26,7 @@ func main() {
 	messageStore := db.NewMessageStore(conn)
 
 	userService := service.NewUserService(userStore)
-	messageService := service.NewMessageService(messageStore)
+	messageService := service.NewMessageService(messageStore, userStore)
 
 	server := drivers.NewController(
 		userService,

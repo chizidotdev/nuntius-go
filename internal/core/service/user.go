@@ -139,3 +139,7 @@ func (u *UserService) SaveSettings(ctx context.Context, req SaveSettingsReq) (*d
 
 	return user, err
 }
+
+func (u *UserService) GetByUsername(ctx context.Context, username string) (*domain.User, error) {
+	return u.repo.GetByUsername(ctx, username)
+}

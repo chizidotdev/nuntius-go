@@ -32,20 +32,22 @@ func NewController(
 		messageService: messageService,
 	}
 
+	// Public routes
+	router.GET("/message/:username", controller.message)
+	router.POST("/message/:username", controller.sendMessage)
+
+	// Auth routes
 	router.GET("/login", controller.login)
 	router.GET("/login/google", controller.loginWithSSO)
 	router.GET("/callback", controller.ssoCallback)
 
+	// Protected routes
 	router.Use(controller.isAuthenticated)
 	router.GET("/", controller.index)
 	router.GET("/logout", controller.logout)
-
 	router.GET("/settings", controller.settings)
 	router.POST("/settings", controller.saveSettings)
-	//
-	//router.GET("/messages", controller.Messages)
-	//router.GET("/messages/:id", controller.Message)
-	//router.POST("/messages/:id", controller.MessagePost)
+	router.GET("/messages", controller.messages)
 
 	return controller
 }

@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-var _ domain.MessageRepository = (*MessageStore)(nil)
+var _ domain.MessageStore = (*MessageStore)(nil)
 
 type MessageStore struct {
 	DB *gorm.DB

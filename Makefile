@@ -14,7 +14,7 @@ dropdb:
 	docker exec -it nuntius dropdb nuntius
 
 server:
-	make templ && go run cmd/main.go
+	make templ && air
 
 templ:
 	templ fmt . && templ generate

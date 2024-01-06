@@ -1,0 +1,16 @@
+package components
+
+import "github.com/chizidotdev/nuntius/internal/core/domain"
+
+templ Messages(msgs []*domain.Message) {
+	<div>
+		<h1>My Messages</h1>
+		<p>Scroll to check out your messages.</p>
+		<ul>
+			for _, msg := range msgs {
+				<li>{ msg.Content }</li>
+			}
+		</ul>
+		<a href="/">Back to home</a>
+	</div>
+}

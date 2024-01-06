@@ -44,3 +44,24 @@ func (c *Controller) settings(ctx *gin.Context) {
 	component := components.Settings()
 	renderComponent(component, ctx)
 }
+
+func (c *Controller) messages(ctx *gin.Context) {
+	user := c.getAuthenticatedUser(ctx)
+	msgs, err := c.messageService.ListMessages(ctx, user.ID)
+	if err != nil {
+		ctx.JSON(500, gin.H{"error": err.Error()})
+		return
+	}
+	component := components.Messages(msgs)
+	renderComponent(component, ctx)
+}
+
+func (c *Controller) message(ctx *gin.Context) {
+	username := ctx.Param("username")
+	user, err := c.userService.GetByUsername(ctx, username)
+	if err != nil {
+		ctx.Redirect(http.StatusFound, "/")
+	}
+	component := components.Message(user.Username)
+	renderComponent(component, ctx)
+}

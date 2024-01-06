@@ -14,7 +14,7 @@ type (
 		Delete(context.Context, uuid.UUID) error
 	}
 
-	MessageRepository interface {
+	MessageStore interface {
 		Create(context.Context, *Message) error
 		Get(context.Context, uuid.UUID) (*Message, error)
 		GetAll(context.Context, uuid.UUID) ([]*Message, error)

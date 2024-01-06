@@ -1,0 +1,14 @@
+package components
+
+templ Message(username string) {
+	@Layout("Send Message") {
+		<div>
+			<h1>Say Something</h1>
+			<form hx-post={ "/message/" + username }>
+				<label>Leave a message</label>
+				<textarea name="content" placeholder="Enter your message"></textarea>
+				<button type="submit">Send Message</button>
+			</form>
+		</div>
+	}
+}
