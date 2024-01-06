@@ -55,7 +55,7 @@ func (m *MessageStore) Get(_ context.Context, id uuid.UUID) (*domain.Message, er
 
 func (m *MessageStore) GetAll(_ context.Context, userID uuid.UUID) ([]*domain.Message, error) {
 	var msgs []*domain.Message
-	err := m.DB.Find(&msgs, "user_id = ?", userID).Error
+	err := m.DB.Order("created_at desc").Find(&msgs, "user_id = ?", userID).Error
 	return msgs, err
 }
 
