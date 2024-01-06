@@ -5,8 +5,7 @@ templ Settings() {
 		<div>
 			<h1>Settings</h1>
 			<p>Hi there. Please set a username to continue</p>
-			<div id="response"></div>
-			<form hx-post="/settings" hx-target="#response">
+			<form method="POST">
 				<input type="text" name="username" placeholder="Enter new username"/>
 				<button type="submit">Change Username</button>
 			</form>
@@ -15,5 +14,15 @@ templ Settings() {
 }
 
 templ SettingsError(errMsg string) {
-	<p>{ errMsg }</p>
+	@Layout("Settings") {
+		<div>
+			<h1>Settings</h1>
+			<p>Hi there. Please set a username to continue</p>
+			<form method="POST">
+				<input type="text" name="username" placeholder="Enter new username"/>
+				<button type="submit">Change Username</button>
+			</form>
+			<div id="response">{ errMsg }</div>
+		</div>
+	}
 }
