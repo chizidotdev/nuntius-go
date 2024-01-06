@@ -19,9 +19,9 @@ type User struct {
 	Base
 	FirstName     string
 	LastName      string
-	Username      string `gorm:"unique"`
+	Username      string `gorm:"uniqueIndex"`
 	Image         string
-	Email         string `gorm:"not null;uniqueIndex"`
+	Email         string `gorm:"not null;unique"`
 	EmailVerified bool   `gorm:"not null;default:false"`
 	GoogleID      string
 	Messages      []Message
