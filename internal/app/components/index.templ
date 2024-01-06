@@ -4,6 +4,11 @@ import "github.com/chizidotdev/nuntius/internal/core/domain"
 
 templ Index(user *domain.User, profileLink string, whatsAppUrl templ.SafeURL) {
 	@Layout("Home") {
+		<style>
+            #profile-link {
+                cursor: pointer;
+            }
+        </style>
 		<h1>{ user.Username }'s profile</h1>
 		<p id="profile-link" onclick="copyProfileLink()">{ profileLink }</p>
 		<p>Share your profile link ❤️ to get anonymous messages from your friends. Go to 'View Messages' to view the responses.</p>
