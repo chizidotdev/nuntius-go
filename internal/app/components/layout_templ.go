@@ -23,14 +23,14 @@ func Layout(title string) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link href=\"https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;500;800&amp;display=swap\" rel=\"stylesheet\"><meta name=\"description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:title\" content=\"Login - Nuntius\"><meta property=\"og:description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><title>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<html lang=\"en\"><head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><meta http-equiv=\"Content-Type\" content=\"text/html;charset=UTF-8\"><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link href=\"https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300;500;800&amp;display=swap\" rel=\"stylesheet\"><meta name=\"description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><meta property=\"og:type\" content=\"website\"><meta property=\"og:title\" content=\"Login - Nuntius\"><meta property=\"og:description\" content=\"Nuntius is an interactive anonymous messaging site with a dare game. Create your Profile Link and Send it to all your contacts to check what your friends will say to you\"><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/app/components/layout.templ`, Line: 21, Col: 17}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `internal/app/components/layout.templ`, Line: 22, Col: 17}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
