@@ -2,12 +2,28 @@ package drivers
 
 import (
 	"fmt"
+	"github.com/chizidotdev/nuntius/internal/app/components"
 	"github.com/chizidotdev/nuntius/internal/core/service"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
+
+func (c *Controller) login(ctx *gin.Context) {
+	user := c.getAuthenticatedUser(ctx)
+	if user.Email != "" {
+		ctx.Redirect(http.StatusFound, "/")
+		return
+	}
+	component := components.Login()
+	renderComponent(component, ctx)
+}
+
+func (c *Controller) settings(ctx *gin.Context) {
+	component := components.Settings()
+	renderComponent(component, ctx)
+}
 
 func (c *Controller) logout(ctx *gin.Context) {
 	session := sessions.Default(ctx)

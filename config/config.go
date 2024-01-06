@@ -11,6 +11,7 @@ type Config struct {
 	GoogleClientID     string `mapstructure:"GOOGLE_CLIENT_ID"`
 	GoogleClientSecret string `mapstructure:"GOOGLE_CLIENT_SECRET"`
 	AuthCallbackUrl    string `mapstructure:"AUTH_CALLBACK_URL"`
+	BaseUrl            string `mapstructure:"BASE_URL"`
 }
 
 var EnvVars Config
@@ -28,4 +29,5 @@ func LoadConfig() {
 	EnvVars.GoogleClientID = viper.GetString("GOOGLE_CLIENT_ID")
 	EnvVars.GoogleClientSecret = viper.GetString("GOOGLE_CLIENT_SECRET")
 	EnvVars.AuthCallbackUrl = viper.GetString("AUTH_CALLBACK_URL")
+	EnvVars.BaseUrl = viper.GetString("BASE_URL")
 }
