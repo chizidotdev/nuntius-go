@@ -1,6 +1,7 @@
 package drivers
 
 import (
+	"fmt"
 	"github.com/a-h/templ"
 	"github.com/chizidotdev/nuntius/internal/app/components"
 	"github.com/gin-gonic/gin"
@@ -60,8 +61,11 @@ func (c *Controller) message(ctx *gin.Context) {
 	username := ctx.Param("username")
 	user, err := c.userService.GetByUsername(ctx, username)
 	if err != nil {
-		ctx.Redirect(http.StatusFound, "/")
+		errMsg := fmt.Sprintf("User with username '%s' not found", username)
+		component := components.Message("", errMsg)
+		renderComponent(component, ctx)
+		return
 	}
-	component := components.Message(user.Username)
+	component := components.Message(user.Username, "")
 	renderComponent(component, ctx)
 }

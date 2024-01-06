@@ -4,7 +4,6 @@ import (
 	"github.com/chizidotdev/nuntius/internal/core/domain"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
@@ -26,7 +25,5 @@ func (c *Controller) getAuthenticatedUser(ctx *gin.Context) *domain.User {
 		return &domain.User{}
 	}
 
-	log.Println("user >>>>>>>>>", user)
-	log.Println("username .........", user.Username)
 	return &user
 }

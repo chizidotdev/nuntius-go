@@ -1,14 +1,41 @@
 package components
 
-templ Message(username string) {
+templ Message(username string, err string) {
 	@Layout("Send Message") {
 		<div>
-			<h1>Say Something</h1>
-			<form hx-post={ "/message/" + username }>
-				<label>Leave a message</label>
-				<textarea name="content" placeholder="Enter your message"></textarea>
-				<button type="submit">Send Message</button>
-			</form>
+			<h2>Say Something</h2>
+			if err != "" {
+				@MessageError(err)
+			} else {
+				<div id="response"></div>
+				<form hx-post={ "/message/" + username } hx-target="#response">
+					<label>Leave a message</label>
+					<br/>
+					<textarea name="content" placeholder="Enter your message"></textarea>
+					<br/>
+					<br/>
+					<button type="submit">Send Message</button>
+				</form>
+			}
 		</div>
 	}
+}
+
+templ MessageResponse() {
+	<div>
+		<p>Your message has been sent. Now it's your turn to dare your friends to send you a message!</p>
+		<a href="/login">Click here to Login</a>
+		<br/>
+		<br/>
+	</div>
+}
+
+templ MessageError(errMsg string) {
+	<div>
+		<p>An error occurred. Please try again.</p>
+		<p>{ errMsg }</p>
+		<a href="/login">Click here to Login</a>
+		<br/>
+		<br/>
+	</div>
 }

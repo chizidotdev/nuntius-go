@@ -55,6 +55,8 @@ func (s *UserStore) Upsert(_ context.Context, arg *domain.User) (*domain.User, e
 		}, clause.Returning{}).
 		Create(&u).Error
 
+	log.Println("user >>>>>>>>>", u)
+	log.Println("arg >>>>>>>>>", arg)
 	return &domain.User{
 		ID:            u.ID,
 		FirstName:     u.FirstName,
