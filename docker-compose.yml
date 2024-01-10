@@ -1,0 +1,24 @@
+services:
+    web:
+        build: .
+        env_file:
+            - .env
+        ports:
+            - '8080:8080'
+        volumes:
+            - .:/app
+        command: make server
+    db:
+        container_name: nuntius-db
+        image: postgres:alpine
+        ports:
+            - '5432:5432'
+        volumes:
+            - ./data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: secret
+            POSTGRES_DB: nuntius
+
+volumes:
+    data:

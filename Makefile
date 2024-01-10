@@ -1,22 +1,13 @@
 build:
-	go build -o bin/copia ./main.go
-
-postgres:
-	docker run --name nuntius -p 5434:5432 -e POSTGRES_USER=root -e POSTGRES_PASSWORD=secret -d postgres:12-alpine
+	go build -o build/bin/main ./cmd/main.go
 
 postgres-cli:
-	docker exec -it nuntius psql --username=root --dbname=nuntius
-
-createdb:
-	docker exec -it nuntius createdb --username=root --owner=root nuntius
-
-dropdb:
-	docker exec -it nuntius dropdb nuntius
-
-server:
-	make templ && air
+	docker exec -it nuntius-db psql --username=root --dbname=nuntius
 
 templ:
 	templ fmt . && templ generate
 
-.PHONY: build postgres postgres-cli createdb dropdb server templ
+server: templ
+	air
+
+.PHONY: build postgres-cli server templ
