@@ -1,6 +1,8 @@
 services:
     web:
         build: .
+        depends_on:
+            -   db
         env_file:
             - .env
         ports:
