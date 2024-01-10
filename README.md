@@ -19,6 +19,20 @@ docker compose up
 ```
 Navigate to `localhost:8080` on your browser to view the app
 
+### Architecture Overview
+```bash
+cmd/ # Main application entry point
+config/ # Application configuration ( env variables )
+internal/
+   |-- app/
+   |   |-- components/ # Htmx + Templ components
+   |   |-- db/ # Database connection
+   |   |-- drivers/ # External services ( HTTP client )
+   |-- core/
+   |   |-- domain/ # Core domain data models
+   |   |-- service/ # Core business logic
+```
+
 ### TODO
 - [x] Containerize with docker
 - [ ] Websockets implementation
