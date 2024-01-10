@@ -10,7 +10,11 @@ Goal of this project was to experiment with htmx and templ.
 - Clean architecture
 
 ## Development
-### Setup
+#### Prerequisites
+Ensure you have these installed
+- [templ cli](https://templ.guide/quick-start/installation)
+- [golang air](https://github.com/cosmtrek/air)
+
 Run the following command to start the server
 ```bash
 make server
