@@ -1,26 +1,24 @@
 # Nuntius Go
 
 Nuntius is an interactive anonymous messaging webapp with a dare game. Built with Go, HTMX, Templ and PostgresQL. This is a clone of the [original nuntius](https://github.com/chizidotdev/nuntius) built with NextJS...
-Goal of this project was to experiment with htmx and templ.
+Goal of this project was to experiment with the golang, htmx and templ stack.
 
-### Explored Features of this application
-- Send and receive anonymous messages
-- Google oauth
+### Explored Features
+- Templ + HTMX for server side rendering and client side interactivity
+- Google oauth2
 - Session storage with gin and postgres
-- Clean architecture
+- Send and receive anonymous messages
+- Clean architecture pattern
 
 ## Development
-#### Prerequisites
-Ensure you have these installed
-- [templ cli](https://templ.guide/quick-start/installation)
-- [golang air](https://github.com/cosmtrek/air)
+Ensure you have [docker](https://docs.docker.com/engine/install) and the [compose plugin](https://docs.docker.com/compose/install) installed and setup on your machine
 
 Run the following command to start the server
 ```bash
-make server
+docker compose up
 ```
 
 ### TODO
-- Containerize the app
-- Websockets implementation
+- [x] Containerize with docker
+- [ ] Websockets implementation
  
