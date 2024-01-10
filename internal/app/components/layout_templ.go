@@ -61,7 +61,7 @@ func Layout(title string) templ.Component {
 		templ_7745c5c3_Var5 := `
 		        body {
                     font-family: Darker Grotesque,sans-serif;
-                    margin: 1rem;
+                    padding: 1rem;
                     max-width: 800px;
                     margin-inline: auto;
                 }
