@@ -17,8 +17,11 @@ Run the following command to start the server
 ```bash
 docker compose up
 ```
+Navigate to `localhost:8080` on your browser to view the app
 
 ### TODO
 - [x] Containerize with docker
 - [ ] Websockets implementation
  
+### Contact
+- 𝕏 [@chizidotdev](https://twitter.com/chizidotdev)
