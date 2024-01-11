@@ -1,6 +1,8 @@
 services:
     web:
-        build: .
+        build:
+            context: .
+            dockerfile: docker.Dockerfile
         depends_on:
             -   db
         env_file:
