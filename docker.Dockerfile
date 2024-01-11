@@ -8,4 +8,6 @@ RUN go install github.com/a-h/templ/cmd/templ@latest
 
 COPY . /app/.
 
-RUN go mod tidy
+RUN go mod download
+
+COPY . /app/.
